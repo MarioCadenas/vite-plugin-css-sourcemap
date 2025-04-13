@@ -59,7 +59,7 @@
     "url": "https://github.com/MarioCadenas/vite-plugin-css-sourcemap/issues"
   },
   "homepage": "https://github.com/MarioCadenas/vite-plugin-css-sourcemap#readme",
-  "description": "A Vite plugin for handling CSS sourcemaps",
+  "description": "A Vite plugin to generate CSS sourcemaps",
   "peerDependencies": {
     "vite": "^5.0.0 || ^6.0.0"
   },

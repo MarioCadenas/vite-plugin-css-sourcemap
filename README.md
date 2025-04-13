@@ -138,7 +138,8 @@ The plugin works by:
 
 1. Using the `transform` hook to process CSS files and generate sourcemaps
 2. Using the `generateBundle` hook to ensure sourcemaps are properly emitted
-3. Configuring the sourcemap URL based on the provided options
+3. It observes `vite:css-post` plugin, specifically the `augmentChunkHash` hook to obtain the future id of the file.
+4. Allows configuring the sourcemap URL based on the provided options
 
 ## Compatibility
 
