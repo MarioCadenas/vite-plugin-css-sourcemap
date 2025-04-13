@@ -2,6 +2,10 @@
 
 A Vite plugin for handling CSS sourcemaps. This plugin ensures that CSS sourcemaps are properly generated and referenced in your Vite builds.
 
+> [!IMPORTANT]
+> This plugin is only meant for the build phase, to generate sourcemap files for your build.
+> It doesn't work on dev mode.
+
 ## Features
 
 - Automatically generates sourcemaps for CSS files
