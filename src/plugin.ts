@@ -7,6 +7,8 @@ import type {
   PluginContext,
   PreRenderedAsset,
   RenderedChunk,
+  InputOption,
+  OutputOptions,
 } from 'rollup';
 import { EXTENSIONS, PLUGIN_NAME } from './constants';
 import { hasValidExtension } from './utils';
@@ -16,6 +18,38 @@ export interface CssSourcemapOptions {
   enabled?: boolean;
   folder?: string;
   getURL?: (fileName: string) => string;
+}
+
+function extractFileName(input: InputOption) {
+  if (typeof input === 'string') {
+    return path.parse(input).name;
+  }
+
+  if (Array.isArray(input) && input[0]) {
+    return path.parse(input[0]).name;
+  }
+
+  return path.parse(Object.keys(input)[0]!).name;
+}
+
+function extractFullPath(outputOptions: OutputOptions, fileName: string) {
+  let fullPath = fileName;
+
+  if (outputOptions && outputOptions.assetFileNames) {
+    let assetDir: string | null = null;
+
+    if (typeof outputOptions.assetFileNames === 'string') {
+      assetDir = path.dirname(outputOptions.assetFileNames);
+    } else if (typeof outputOptions.assetFileNames === 'function') {
+      // TODO: Implement this
+    }
+
+    if (assetDir && assetDir !== '.') {
+      fullPath = path.join(assetDir, fileName);
+    }
+  }
+
+  return fullPath;
 }
 
 export default function cssSourcemapPlugin(
@@ -37,6 +71,9 @@ export default function cssSourcemapPlugin(
 
   const assetToId = new Map<string, string[]>();
   const idToMap = new Map<string, string>();
+  let templateName: string;
+  let outputOptions: OutputOptions | null = null;
+  let willAugmentChunkHash = true;
 
   return {
     name: PLUGIN_NAME,
@@ -49,6 +86,8 @@ export default function cssSourcemapPlugin(
       if (!viteCSSPlugin) {
         throw new Error('vite:css-post plugin not found.');
       }
+
+      templateName = extractFileName(options.input);
 
       const augmentChunkHashHandler = {
         apply: function (
@@ -88,6 +127,36 @@ export default function cssSourcemapPlugin(
       });
     },
 
+    outputOptions(options: OutputOptions) {
+      outputOptions = options;
+
+      if (typeof options.entryFileNames === 'string') {
+        willAugmentChunkHash = options.entryFileNames.includes('[hash]');
+      } else if (typeof options.entryFileNames === 'function') {
+        // TODO: Implement this
+      }
+
+      return options;
+    },
+
+    async renderChunk(_: string, chunk: RenderedChunk) {
+      if (willAugmentChunkHash) return null;
+
+      for (const id of chunk.moduleIds) {
+        if (hasValidExtension(id, extensions)) {
+          const fullPath = extractFullPath(outputOptions!, templateName);
+
+          if (assetToId.has(fullPath)) {
+            assetToId.get(fullPath)?.push(id);
+          } else {
+            assetToId.set(fullPath, [id]);
+          }
+        }
+      }
+
+      return null;
+    },
+
     async transform(code, id) {
       if (hasValidExtension(id, extensions)) {
         const fileName = path.parse(id).name.replace('.module', '');
@@ -110,9 +179,12 @@ export default function cssSourcemapPlugin(
     },
 
     async generateBundle(_: NormalizedOutputOptions, bundle: OutputBundle) {
+      const fullPath = extractFullPath(outputOptions!, templateName);
+
       for (const [fileName, asset] of Object.entries(bundle)) {
         if (asset.type === 'asset' && fileName.endsWith('.css')) {
-          const sourceFileIds = assetToId.get(fileName) || [];
+          const sourceFileIds =
+            assetToId.get(fileName) || assetToId.get(fullPath) || [];
           const newMapFileName = `${asset.fileName}.map`;
 
           const finalSourceMap = sourceFileIds.reduce(
