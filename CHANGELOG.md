@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/compare/v1.0.1...v1.0.2) (2025-04-27)
+
+
+### Bug Fixes
+
+* path argument must be of type string ([#6](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/issues/6)) ([efe3354](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/commit/efe33540aecf9647f02b8be4bbf67fe1bafe6875))
+
 ## [1.0.1](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/compare/v1.0.0...v1.0.1) (2025-04-18)
 
 
