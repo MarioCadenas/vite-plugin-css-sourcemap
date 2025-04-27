@@ -15,15 +15,14 @@ export default defineConfig({
     minify: false,
     emptyOutDir: true,
     rollupOptions: {
-      // input: ['./foo.html'],
       input: {
         foo: './foo.html',
       },
-      // output: {
-      //   entryFileNames: "[name].js",
-      //   chunkFileNames: "js/[name].js",
-      //   assetFileNames: "assets/[name]-[hash].[ext]",
-      // },
+      output: {
+        entryFileNames: '[name].js',
+        chunkFileNames: 'js/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]',
+      },
     },
   },
 });

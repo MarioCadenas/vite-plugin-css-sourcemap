@@ -203,6 +203,11 @@ export default function cssSourcemapPlugin(
             null,
           );
 
+          if (!finalSourceMap) {
+            console.warn(`No source map found for ${fileName}`);
+            continue;
+          }
+
           const mapReferencePath = path.basename(newMapFileName);
           const outputPath = path.dirname(newMapFileName);
 
