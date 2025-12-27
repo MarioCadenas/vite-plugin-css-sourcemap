@@ -15,7 +15,7 @@ const gitPlugin = {
 
 export default {
   verifyConditions: [npmPlugin, githubPlugin],
-  prepare: [npmPlugin, changelogPlugin, gitPlugin],
+  prepare: [changelogPlugin, npmPlugin, gitPlugin],
   publish: [npmPlugin, githubPlugin],
   success: [githubPlugin],
   fail: [githubPlugin],
