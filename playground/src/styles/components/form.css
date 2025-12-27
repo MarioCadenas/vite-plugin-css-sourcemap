@@ -1,0 +1,59 @@
+/* Form Components */
+.form-group {
+  margin-bottom: var(--spacing-md, 1rem);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--spacing-sm, 0.5rem);
+  font-weight: 500;
+  color: var(--text-dark, #333);
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius, 4px);
+  font-size: 1rem;
+  transition:
+    border-color var(--transition-fast, 0.2s ease),
+    box-shadow var(--transition-fast, 0.2s ease);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color, #4caf50);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+.form-input::placeholder {
+  color: #999;
+}
+
+.form-input--error {
+  border-color: #f44336;
+}
+
+.form-input--error:focus {
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+}
+
+.form-error {
+  color: #f44336;
+  font-size: 0.875rem;
+  margin-top: var(--spacing-sm, 0.5rem);
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}

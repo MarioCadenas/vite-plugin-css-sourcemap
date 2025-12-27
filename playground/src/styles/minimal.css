@@ -1,0 +1,6 @@
+/* Minimal CSS - Single file test */
+.test-class {
+  color: purple;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}

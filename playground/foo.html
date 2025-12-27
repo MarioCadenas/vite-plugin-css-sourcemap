@@ -3,17 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSS Sourcemap Plugin Playground</title>
+    <title>CSS Sourcemap - Simple Test (foo)</title>
+    <!-- Test: CSS linked in HTML (not imported via JS) -->
     <link rel="stylesheet" href="/src/styles/main.css" />
   </head>
   <body>
     <div class="container">
-      <h1>CSS Sourcemap Plugin Playground</h1>
+      <h1>Simple Test Page (foo.html)</h1>
       <p class="description">
-        This is a test page for the CSS sourcemap plugin.
+        This page tests CSS linked directly in HTML and imported via JS.
       </p>
       <button class="button">Click me</button>
     </div>
-    <script type="module" src="/src/main.ts"></script>
+    <!-- This imports additional CSS via JS -->
+    <script type="module" src="/src/foo-entry.ts"></script>
   </body>
 </html>

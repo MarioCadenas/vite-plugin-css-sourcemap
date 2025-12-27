@@ -9,9 +9,47 @@ import type {
   RenderedChunk,
   InputOption,
   OutputOptions,
+  ExistingRawSourceMap,
 } from 'rollup';
 import { EXTENSIONS, PLUGIN_NAME } from './constants';
 import { hasValidExtension } from './utils';
+
+/**
+ * Checks if a sourcemap is empty (has no meaningful mappings or sources)
+ */
+function isEmptySourcemap(map: ExistingRawSourceMap): boolean {
+  return (
+    !map.mappings ||
+    map.mappings === '' ||
+    !map.sources ||
+    map.sources.length === 0
+  );
+}
+
+/**
+ * Generates an identity sourcemap for a source file.
+ * This maps each line to itself in the original file.
+ */
+function generateIdentitySourcemap(
+  code: string,
+  filename: string,
+): ExistingRawSourceMap {
+  const lines = code.split('\n');
+  // VLQ encoding for identity map: each line maps to the same line in source
+  // AAAA = column 0, source 0, source line 0, source column 0
+  // For subsequent lines, we only need to indicate "next line, same column offset"
+  // AACA = column 0, source 0, source line +1, source column 0
+  const mappings = lines.map((_, i) => (i === 0 ? 'AAAA' : 'AACA')).join(';');
+
+  return {
+    version: 3,
+    file: path.basename(filename),
+    sources: [filename],
+    sourcesContent: [code],
+    names: [],
+    mappings,
+  };
+}
 
 export interface CssSourcemapOptions {
   extensions?: string[];
@@ -160,18 +198,25 @@ export default function cssSourcemapPlugin(
     async transform(code, id) {
       if (hasValidExtension(id, extensions)) {
         const fileName = path.parse(id).name.replace('.module', '');
-        const combinedSourcemap = this.getCombinedSourcemap();
+        let sourcemap = this.getCombinedSourcemap() as ExistingRawSourceMap;
+
+        // If the combined sourcemap is empty (no prior transforms generated one),
+        // create an identity sourcemap that maps the file to itself
+        if (isEmptySourcemap(sourcemap)) {
+          sourcemap = generateIdentitySourcemap(code, id);
+        }
+
         const referenceIdMap = this.emitFile({
           type: 'asset',
           name: `${fileName}.map`,
-          source: combinedSourcemap.toString(),
+          source: JSON.stringify(sourcemap),
         });
 
         idToMap.set(id, referenceIdMap);
 
         return {
           code: code,
-          map: combinedSourcemap,
+          map: sourcemap,
         };
       }
 

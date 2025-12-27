@@ -16,7 +16,12 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
+        // Test Case 1: Full app with many CSS imports
+        index: './index.html',
+        // Test Case 2: Simple page with minimal CSS
         foo: './foo.html',
+        // Test Case 3: Minimal single CSS file
+        minimal: './minimal.html',
       },
       output: {
         entryFileNames: '[name].js',

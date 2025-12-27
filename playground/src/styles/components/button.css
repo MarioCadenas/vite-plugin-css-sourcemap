@@ -1,0 +1,57 @@
+/* Button Component */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
+  border: none;
+  border-radius: var(--border-radius, 4px);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.2s ease);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background-color: var(--primary-color, #4caf50);
+  color: white;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background-color: var(--primary-hover, #45a049);
+}
+
+.btn--secondary {
+  background-color: var(--secondary-color, #2196f3);
+  color: white;
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background-color: #1976d2;
+}
+
+.btn--outline {
+  background-color: transparent;
+  border: 2px solid var(--primary-color, #4caf50);
+  color: var(--primary-color, #4caf50);
+}
+
+.btn--outline:hover:not(:disabled) {
+  background-color: var(--primary-color, #4caf50);
+  color: white;
+}
+
+.btn--sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.btn--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+}

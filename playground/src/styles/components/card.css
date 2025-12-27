@@ -1,0 +1,40 @@
+/* Card Component */
+.card {
+  background: white;
+  border-radius: var(--border-radius, 4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: var(--spacing-lg, 2rem);
+  transition:
+    transform var(--transition-normal, 0.3s ease),
+    box-shadow var(--transition-normal, 0.3s ease);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card__header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: var(--spacing-md, 1rem);
+  margin-bottom: var(--spacing-md, 1rem);
+}
+
+.card__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-dark, #333);
+}
+
+.card__body {
+  color: var(--text-muted, #666);
+}
+
+.card__footer {
+  border-top: 1px solid #eee;
+  padding-top: var(--spacing-md, 1rem);
+  margin-top: var(--spacing-md, 1rem);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm, 0.5rem);
+}

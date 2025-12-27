@@ -1,0 +1,36 @@
+/* Container Layout */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md, 1rem);
+}
+
+.container--sm {
+  max-width: 640px;
+}
+
+.container--md {
+  max-width: 768px;
+}
+
+.container--lg {
+  max-width: 1024px;
+}
+
+.container--xl {
+  max-width: 1280px;
+}
+
+.container--fluid {
+  max-width: none;
+}
+
+/* Section spacing */
+.section {
+  padding: var(--spacing-lg, 2rem) 0;
+}
+
+.section--lg {
+  padding: 4rem 0;
+}
