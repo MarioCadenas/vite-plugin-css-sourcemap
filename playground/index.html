@@ -3,17 +3,205 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSS Sourcemap Plugin Playground</title>
-    <link rel="stylesheet" href="/src/styles/main.css" />
+    <title>CSS Sourcemap Plugin - Full Test</title>
   </head>
   <body>
-    <div class="container">
-      <h1>CSS Sourcemap Plugin Playground</h1>
-      <p class="description">
-        This is a test page for the CSS sourcemap plugin.
+    <div class="container section">
+      <h1 class="text-center mb-3">CSS Sourcemap Plugin Playground</h1>
+      <p class="text-center text-muted mb-3">
+        Testing CSS sourcemap generation with multiple CSS files
       </p>
-      <button class="button">Click me</button>
+
+      <!-- Test: Grid Layout -->
+      <section class="mb-3">
+        <h2 class="mb-2">Grid Layout Test</h2>
+        <div class="grid grid--cols-3">
+          <!-- Test: Card Components -->
+          <div class="card animate-slide-up">
+            <div class="card__header">
+              <h3 class="card__title">Card 1</h3>
+            </div>
+            <div class="card__body">
+              <p>Testing card component styles with CSS variables.</p>
+            </div>
+            <div class="card__footer">
+              <button class="btn btn--outline btn--sm">Cancel</button>
+              <button class="btn btn--primary btn--sm">Save</button>
+            </div>
+          </div>
+
+          <div class="card animate-slide-up" style="animation-delay: 0.1s">
+            <div class="card__header">
+              <h3 class="card__title">Card 2</h3>
+            </div>
+            <div class="card__body">
+              <p>Multiple cards to test grid and component styles.</p>
+            </div>
+            <div class="card__footer">
+              <button class="btn btn--secondary btn--sm">Action</button>
+            </div>
+          </div>
+
+          <div class="card animate-slide-up" style="animation-delay: 0.2s">
+            <div class="card__header">
+              <h3 class="card__title">Card 3</h3>
+            </div>
+            <div class="card__body">
+              <p>Animations and transitions are also tested.</p>
+            </div>
+            <div class="card__footer">
+              <button class="btn btn--primary btn--sm">Learn More</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Test: Button Variations -->
+      <section class="mb-3">
+        <h2 class="mb-2">Button Variations</h2>
+        <div class="d-flex flex-wrap gap-2">
+          <button class="btn btn--primary">Primary</button>
+          <button class="btn btn--secondary">Secondary</button>
+          <button class="btn btn--outline">Outline</button>
+          <button class="btn btn--primary btn--sm">Small</button>
+          <button class="btn btn--primary btn--lg">Large</button>
+          <button class="btn btn--primary" disabled>Disabled</button>
+        </div>
+      </section>
+
+      <!-- Test: Form Components -->
+      <section class="mb-3">
+        <h2 class="mb-2">Form Components</h2>
+        <div class="card">
+          <form>
+            <div class="grid grid--cols-2">
+              <div class="form-group">
+                <label class="form-label" for="name">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-input"
+                  placeholder="Enter your name"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-input"
+                  placeholder="Enter your email"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="error-input"
+                >Input with Error</label
+              >
+              <input
+                type="text"
+                id="error-input"
+                class="form-input form-input--error"
+                value="Invalid value"
+              />
+              <p class="form-error">This field has an error</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="select">Select Option</label>
+              <select id="select" class="form-input form-select">
+                <option>Option 1</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Message</label>
+              <textarea
+                id="message"
+                class="form-input form-textarea"
+                placeholder="Enter your message"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary">Submit Form</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Test: Animations -->
+      <section class="mb-3">
+        <h2 class="mb-2">Animation Tests</h2>
+        <div class="d-flex gap-2 items-center">
+          <div
+            class="p-2 bg-primary text-center rounded animate-pulse"
+            style="color: white; width: 80px"
+          >
+            Pulse
+          </div>
+          <div
+            class="p-2 bg-secondary text-center rounded animate-bounce"
+            style="color: white; width: 80px"
+          >
+            Bounce
+          </div>
+          <div
+            class="p-2 bg-primary text-center rounded animate-spin"
+            style="color: white; width: 80px"
+          >
+            Spin
+          </div>
+        </div>
+      </section>
+
+      <!-- Test: Modal -->
+      <section class="mb-3">
+        <h2 class="mb-2">Modal Test</h2>
+        <button class="btn btn--primary" data-open-modal>Open Modal</button>
+      </section>
+
+      <!-- Test: Utility Classes -->
+      <section class="mb-3">
+        <h2 class="mb-2">Utility Classes</h2>
+        <div class="d-flex gap-2 flex-wrap">
+          <span class="p-1 bg-light rounded">bg-light</span>
+          <span class="p-1 bg-white shadow rounded">shadow</span>
+          <span class="p-1 bg-white shadow-lg rounded">shadow-lg</span>
+          <span class="p-1 text-primary">text-primary</span>
+          <span class="p-1 text-secondary">text-secondary</span>
+          <span class="p-1 text-muted">text-muted</span>
+        </div>
+      </section>
+
+      <!-- Original Test Elements -->
+      <section>
+        <h2 class="mb-2">Original Test Elements</h2>
+        <p class="description">
+          This is a test page for the CSS sourcemap plugin with the original
+          styles.
+        </p>
+        <button class="button">Original Button Style</button>
+      </section>
     </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay">
+      <div class="modal">
+        <div class="modal__header">
+          <h3 class="modal__title">Modal Title</h3>
+          <button class="modal__close" data-close-modal>&times;</button>
+        </div>
+        <div class="modal__body">
+          <p>This is a modal dialog to test the modal CSS component.</p>
+          <p class="mt-2 text-muted">
+            It includes animations and overlay styles.
+          </p>
+        </div>
+        <div class="modal__footer">
+          <button class="btn btn--outline" data-close-modal>Cancel</button>
+          <button class="btn btn--primary">Confirm</button>
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

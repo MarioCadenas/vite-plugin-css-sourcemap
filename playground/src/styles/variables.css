@@ -1,0 +1,15 @@
+/* CSS Custom Properties / Variables */
+:root {
+  --primary-color: #4caf50;
+  --primary-hover: #45a049;
+  --secondary-color: #2196f3;
+  --text-dark: #333;
+  --text-muted: #666;
+  --background-light: #f5f5f5;
+  --border-radius: 4px;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+}

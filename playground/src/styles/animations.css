@@ -1,0 +1,132 @@
+/* CSS Animations */
+
+/* Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal, 0.3s ease) forwards;
+}
+
+.animate-fade-out {
+  animation: fadeOut var(--transition-normal, 0.3s ease) forwards;
+}
+
+.animate-slide-up {
+  animation: slideInUp var(--transition-normal, 0.3s ease) forwards;
+}
+
+.animate-slide-down {
+  animation: slideInDown var(--transition-normal, 0.3s ease) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--transition-normal, 0.3s ease) forwards;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+/* Stagger animations */
+.stagger > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.stagger > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.stagger > *:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.stagger > *:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.stagger > *:nth-child(5) {
+  animation-delay: 0.5s;
+}
