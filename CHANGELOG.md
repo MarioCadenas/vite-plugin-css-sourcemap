@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/compare/v1.0.3...v1.0.4) (2025-12-27)
+
+
+### Bug Fixes
+
+* source map extraction ([#12](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/issues/12)) ([22c51b2](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/commit/22c51b28202d313de676a8b0d7d4f1dd94d3d442))
+
 ## [1.0.3](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/compare/v1.0.2...v1.0.3) (2025-12-27)
 
 
