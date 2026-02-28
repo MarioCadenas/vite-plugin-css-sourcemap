@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/compare/v1.0.4...v1.0.5) (2026-02-28)
+
+
+### Bug Fixes
+
+* support scss ([#14](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/issues/14)) ([f310e2a](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/commit/f310e2aa4f3d7cba0647c2186e9376e9a0ed4c99))
+
 ## [1.0.4](https://github.com/MarioCadenas/vite-plugin-css-sourcemap/compare/v1.0.3...v1.0.4) (2025-12-27)
 
 
