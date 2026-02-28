@@ -1,0 +1,177 @@
+// Utility classes
+@use 'variables' as vars;
+
+// Text alignment
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+
+// Text colors
+.text-primary {
+  color: vars.$color-primary;
+}
+.text-secondary {
+  color: vars.$color-secondary;
+}
+.text-success {
+  color: vars.$color-success;
+}
+.text-warning {
+  color: vars.$color-warning;
+}
+.text-error {
+  color: vars.$color-error;
+}
+.text-muted {
+  color: vars.$color-gray-500;
+}
+
+// Background colors
+.bg-primary {
+  background-color: vars.$color-primary;
+}
+.bg-secondary {
+  background-color: vars.$color-secondary;
+}
+.bg-gray-100 {
+  background-color: vars.$color-gray-100;
+}
+.bg-white {
+  background-color: vars.$color-white;
+}
+
+// Margin utilities
+.m-0 {
+  margin: 0;
+}
+.mt-sm {
+  margin-top: vars.$spacing-sm;
+}
+.mt-md {
+  margin-top: vars.$spacing-md;
+}
+.mt-lg {
+  margin-top: vars.$spacing-lg;
+}
+.mb-sm {
+  margin-bottom: vars.$spacing-sm;
+}
+.mb-md {
+  margin-bottom: vars.$spacing-md;
+}
+.mb-lg {
+  margin-bottom: vars.$spacing-lg;
+}
+.my-md {
+  margin-top: vars.$spacing-md;
+  margin-bottom: vars.$spacing-md;
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Padding utilities
+.p-0 {
+  padding: 0;
+}
+.p-sm {
+  padding: vars.$spacing-sm;
+}
+.p-md {
+  padding: vars.$spacing-md;
+}
+.p-lg {
+  padding: vars.$spacing-lg;
+}
+.px-md {
+  padding-left: vars.$spacing-md;
+  padding-right: vars.$spacing-md;
+}
+.py-md {
+  padding-top: vars.$spacing-md;
+  padding-bottom: vars.$spacing-md;
+}
+
+// Display utilities
+.hidden {
+  display: none;
+}
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+
+// Width utilities
+.w-full {
+  width: 100%;
+}
+.w-auto {
+  width: auto;
+}
+
+// Border utilities
+.rounded {
+  border-radius: vars.$border-radius;
+}
+.rounded-lg {
+  border-radius: vars.$border-radius-lg;
+}
+.rounded-full {
+  border-radius: 9999px;
+}
+.border {
+  border: 1px solid vars.$color-gray-200;
+}
+
+// Shadow utilities
+.shadow-sm {
+  box-shadow: vars.$shadow-sm;
+}
+.shadow {
+  box-shadow: vars.$shadow-base;
+}
+.shadow-lg {
+  box-shadow: vars.$shadow-lg;
+}
+
+// Font utilities
+.font-bold {
+  font-weight: 700;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-normal {
+  font-weight: 400;
+}
+.text-sm {
+  font-size: vars.$font-size-sm;
+}
+.text-lg {
+  font-size: vars.$font-size-lg;
+}
+.text-xl {
+  font-size: vars.$font-size-xl;
+}
+
+// Visibility
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,81 @@
+// Card component styles
+@use 'variables' as vars;
+
+.card {
+  background: vars.$color-white;
+  border: 1px solid vars.$color-gray-200;
+  border-radius: vars.$border-radius-lg;
+  box-shadow: vars.$shadow-sm;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: vars.$shadow-base;
+  }
+}
+
+.card-header {
+  padding: vars.$spacing-md vars.$spacing-lg;
+  border-bottom: 1px solid vars.$color-gray-200;
+  background: vars.$color-gray-100;
+
+  h3 {
+    margin: 0;
+    font-size: vars.$font-size-lg;
+    font-weight: 600;
+  }
+}
+
+.card-body {
+  padding: vars.$spacing-lg;
+}
+
+.card-footer {
+  padding: vars.$spacing-md vars.$spacing-lg;
+  border-top: 1px solid vars.$color-gray-200;
+  background: vars.$color-gray-100;
+}
+
+// Card variants
+.card-elevated {
+  border: none;
+  box-shadow: vars.$shadow-lg;
+}
+
+.card-bordered {
+  box-shadow: none;
+  border-width: 2px;
+}
+
+.card-interactive {
+  cursor: pointer;
+  transition:
+    transform vars.$transition-fast,
+    box-shadow vars.$transition-fast;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: vars.$shadow-lg;
+  }
+}
+
+// Card image
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+// Horizontal card
+.card-horizontal {
+  display: flex;
+
+  .card-image {
+    width: 200px;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  .card-body {
+    flex: 1;
+  }
+}
