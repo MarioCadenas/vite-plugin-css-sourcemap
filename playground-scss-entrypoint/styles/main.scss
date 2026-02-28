@@ -1,0 +1,36 @@
+/**
+ * Main SCSS entrypoint.
+ * This is used as a direct rollup input (not imported via JS).
+ * Testing with @forward directive via barrel file.
+ */
+
+// Use the barrel file which @forwards all partials
+@use 'partials' as p;
+
+// Some styles directly in the entrypoint
+.main-content {
+  max-width: p.$max-width;
+  margin: 0 auto;
+  padding: p.$spacing-lg;
+}
+
+.page-header {
+  background: p.$color-primary;
+  color: p.$color-white;
+  padding: p.$spacing-md;
+  margin-bottom: p.$spacing-lg;
+
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+}
+
+.page-footer {
+  margin-top: p.$spacing-xl;
+  padding: p.$spacing-md;
+  background: p.$color-gray-100;
+  text-align: center;
+  font-size: 0.875rem;
+  color: p.$color-gray-600;
+}

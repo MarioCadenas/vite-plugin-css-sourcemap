@@ -1,0 +1,112 @@
+// Form styles
+@use 'variables' as vars;
+
+.form-group {
+  margin-bottom: vars.$spacing-md;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: vars.$spacing-xs;
+  font-size: vars.$font-size-sm;
+  font-weight: 500;
+  color: vars.$color-gray-700;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  display: block;
+  width: 100%;
+  padding: vars.$spacing-sm vars.$spacing-md;
+  font-size: vars.$font-size-base;
+  line-height: 1.5;
+  color: vars.$color-gray-900;
+  background-color: vars.$color-white;
+  border: 1px solid vars.$color-gray-300;
+  border-radius: vars.$border-radius;
+  transition:
+    border-color vars.$transition-fast,
+    box-shadow vars.$transition-fast;
+
+  &:focus {
+    outline: none;
+    border-color: vars.$color-primary;
+    box-shadow: 0 0 0 3px rgba(vars.$color-primary, 0.15);
+  }
+
+  &::placeholder {
+    color: vars.$color-gray-400;
+  }
+
+  &:disabled {
+    background-color: vars.$color-gray-100;
+    cursor: not-allowed;
+  }
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+// Form validation states
+.form-input-error {
+  border-color: vars.$color-error;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(vars.$color-error, 0.15);
+  }
+}
+
+.form-input-success {
+  border-color: vars.$color-success;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(vars.$color-success, 0.15);
+  }
+}
+
+.form-error-message {
+  margin-top: vars.$spacing-xs;
+  font-size: vars.$font-size-sm;
+  color: vars.$color-error;
+}
+
+.form-help-text {
+  margin-top: vars.$spacing-xs;
+  font-size: vars.$font-size-sm;
+  color: vars.$color-gray-500;
+}
+
+// Checkbox and radio
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  margin-bottom: vars.$spacing-sm;
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    width: 1rem;
+    height: 1rem;
+    accent-color: vars.$color-primary;
+  }
+
+  label {
+    font-size: vars.$font-size-base;
+    color: vars.$color-gray-700;
+    cursor: pointer;
+  }
+}
+
+// Inline form
+.form-inline {
+  display: flex;
+  align-items: flex-end;
+  gap: vars.$spacing-md;
+
+  .form-group {
+    margin-bottom: 0;
+  }
+}

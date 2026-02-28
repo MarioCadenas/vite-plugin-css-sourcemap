@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SCSS Entrypoint Playground</title>
+    <!--
+      This HTML simulates a server-rendered page where CSS and JS
+      are loaded via separate tags (not bundled together).
+      
+      In production, these paths would be updated to point to the
+      built assets in the dist folder.
+    -->
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="container">
+        <h1>SCSS Entrypoint Test</h1>
+      </div>
+    </header>
+
+    <main class="main-content container">
+      <section class="section">
+        <h2 class="mb-md">Testing Sourcemaps for SCSS Imports</h2>
+        <p class="text-muted mb-lg">
+          This playground tests the scenario where SCSS is used as a direct
+          rollup entrypoint. The sourcemaps should cover all @imported partials,
+          not just the main entrypoint file.
+        </p>
+
+        <div class="grid grid-cols-3 gap-md">
+          <div class="card">
+            <div class="card-header">
+              <h3>Variables</h3>
+            </div>
+            <div class="card-body">
+              <p>From <code>_variables.scss</code></p>
+              <p class="text-primary mt-sm">Primary color</p>
+              <p class="text-secondary">Secondary color</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Buttons</h3>
+            </div>
+            <div class="card-body">
+              <p class="mb-sm">From <code>_buttons.scss</code></p>
+              <div class="flex gap-sm">
+                <button class="btn btn-primary">Primary</button>
+                <button class="btn btn-secondary">Secondary</button>
+                <button class="btn btn-outline">Outline</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Forms</h3>
+            </div>
+            <div class="card-body">
+              <p class="mb-sm">From <code>_forms.scss</code></p>
+              <div class="form-group">
+                <label class="form-label">Input</label>
+                <input type="text" class="form-input" placeholder="Type here" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-lg">
+          <div class="card-header">
+            <h3>What to Check</h3>
+          </div>
+          <div class="card-body">
+            <ol style="list-style: decimal; padding-left: 1.5rem">
+              <li class="mb-sm">
+                Build this playground: <code>npm run build</code> in the
+                playground-scss-entrypoint directory
+              </li>
+              <li class="mb-sm">
+                Check the generated <code>dist/assets/styles.css.map</code>
+              </li>
+              <li class="mb-sm">
+                The sourcemap should include mappings for ALL SCSS partials:
+                <ul
+                  style="
+                    list-style: disc;
+                    padding-left: 1.5rem;
+                    margin-top: 0.5rem;
+                  "
+                >
+                  <li><code>_variables.scss</code></li>
+                  <li><code>_reset.scss</code></li>
+                  <li><code>_layout.scss</code></li>
+                  <li><code>_buttons.scss</code></li>
+                  <li><code>_cards.scss</code></li>
+                  <li><code>_forms.scss</code></li>
+                  <li><code>_utilities.scss</code></li>
+                </ul>
+              </li>
+              <li>
+                <strong>Bug:</strong> Currently, sourcemaps only cover
+                <code>main.scss</code> and not the imported partials
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container">
+        <p>SCSS Entrypoint Playground - vite-plugin-css-sourcemap</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

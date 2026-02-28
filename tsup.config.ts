@@ -6,4 +6,5 @@ export default defineConfig({
   dts: true,
   outDir: 'dist',
   clean: true,
+  external: ['sass-embedded', 'sass'],
 });

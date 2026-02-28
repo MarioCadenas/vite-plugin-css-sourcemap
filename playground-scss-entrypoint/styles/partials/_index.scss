@@ -1,0 +1,8 @@
+// Barrel file using @forward to re-export all partials
+@forward 'variables';
+@forward 'reset';
+@forward 'layout';
+@forward 'buttons';
+@forward 'cards';
+@forward 'forms';
+@forward 'utilities';

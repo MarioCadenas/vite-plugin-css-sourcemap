@@ -1,4 +1,5 @@
 import path from 'node:path';
+import fs from 'node:fs';
 import type { Plugin } from 'vite';
 import mergeSourceMap from 'merge-source-map';
 import type {
@@ -112,10 +113,62 @@ export default function cssSourcemapPlugin(
   let templateName: string;
   let outputOptions: OutputOptions | null = null;
   let willAugmentChunkHash = true;
+  let sassCompiler: any = null;
+
+  /**
+   * Try to load a Sass compiler (sass-embedded or sass).
+   * Returns the compiler module or false if not available.
+   */
+  async function getSassCompiler() {
+    if (sassCompiler !== null) return sassCompiler;
+
+    try {
+      // Try sass-embedded first (preferred by Vite 7+)
+      sassCompiler = await import('sass-embedded');
+    } catch {
+      // sass-embedded not available, trying sass
+      try {
+        // Fall back to sass
+        sassCompiler = await import('sass');
+      } catch {
+        // Neither sass-embedded nor sass is installed
+        sassCompiler = false;
+      }
+    }
+    return sassCompiler;
+  }
+
+  /**
+   * Compile SCSS/Sass file and extract the sourcemap.
+   * This is used when Vite's CSS pipeline doesn't expose the Sass sourcemap
+   * through getCombinedSourcemap() (e.g., when SCSS is a direct rollup entrypoint).
+   */
+  async function compileSCSS(id: string): Promise<ExistingRawSourceMap | null> {
+    const sass = await getSassCompiler();
+    if (!sass) return null;
+
+    try {
+      const fileContent = await fs.promises.readFile(id, 'utf-8');
+      const result = sass.compileString(fileContent, {
+        url: new URL(`file://${id}`),
+        sourceMap: true,
+        sourceMapIncludeSources: true,
+      });
+
+      if (result.sourceMap) {
+        return result.sourceMap as ExistingRawSourceMap;
+      }
+    } catch (e) {
+      // Sass compilation failed (syntax error, file not found, etc.)
+      // Will fall back to identity sourcemap
+    }
+    return null;
+  }
 
   return {
     name: PLUGIN_NAME,
     apply: 'build',
+
     buildStart(options) {
       const viteCSSPlugin = options.plugins.find(
         (plugin) => plugin.name === 'vite:css-post',
@@ -182,7 +235,9 @@ export default function cssSourcemapPlugin(
 
       for (const id of chunk.moduleIds) {
         if (hasValidExtension(id, extensions)) {
-          const fullPath = extractFullPath(outputOptions!, templateName);
+          // Use the chunk name to derive the asset path, not templateName
+          // This fixes the issue where SCSS entrypoints have different names
+          const fullPath = extractFullPath(outputOptions!, chunk.name);
 
           if (assetToId.has(fullPath)) {
             assetToId.get(fullPath)?.push(id);
@@ -201,9 +256,20 @@ export default function cssSourcemapPlugin(
         let sourcemap = this.getCombinedSourcemap() as ExistingRawSourceMap;
 
         // If the combined sourcemap is empty (no prior transforms generated one),
-        // create an identity sourcemap that maps the file to itself
+        // try to compile SCSS ourselves to get the sourcemap with all partials
         if (isEmptySourcemap(sourcemap)) {
-          sourcemap = generateIdentitySourcemap(code, id);
+          if (id.endsWith('.scss') || id.endsWith('.sass')) {
+            // For SCSS/Sass files, compile to get proper sourcemap with all @imported partials
+            const scssSourcemap = await compileSCSS(id);
+            if (scssSourcemap && !isEmptySourcemap(scssSourcemap)) {
+              sourcemap = scssSourcemap;
+            } else {
+              sourcemap = generateIdentitySourcemap(code, id);
+            }
+          } else {
+            // For plain CSS, generate an identity sourcemap
+            sourcemap = generateIdentitySourcemap(code, id);
+          }
         }
 
         const referenceIdMap = this.emitFile({
@@ -228,8 +294,14 @@ export default function cssSourcemapPlugin(
 
       for (const [fileName, asset] of Object.entries(bundle)) {
         if (asset.type === 'asset' && fileName.endsWith('.css')) {
+          // Try multiple key formats to find the source file IDs
+          // This handles both hashed asset names and non-hashed chunk names
+          const fileNameWithoutExt = fileName.replace(/\.css$/, '');
           const sourceFileIds =
-            assetToId.get(fileName) || assetToId.get(fullPath) || [];
+            assetToId.get(fileName) ||
+            assetToId.get(fileNameWithoutExt) ||
+            assetToId.get(fullPath) ||
+            [];
           const newMapFileName = `${asset.fileName}.map`;
 
           const finalSourceMap = sourceFileIds.reduce(

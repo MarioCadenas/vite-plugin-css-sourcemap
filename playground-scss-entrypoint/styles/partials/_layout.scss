@@ -1,0 +1,81 @@
+// Layout utilities
+@use 'variables' as vars;
+
+.container {
+  width: 100%;
+  max-width: vars.$max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: vars.$spacing-md;
+  padding-right: vars.$spacing-md;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -#{vars.$spacing-sm};
+  margin-right: -#{vars.$spacing-sm};
+}
+
+.col {
+  flex: 1;
+  padding-left: vars.$spacing-sm;
+  padding-right: vars.$spacing-sm;
+}
+
+// Grid system
+.grid {
+  display: grid;
+  gap: vars.$spacing-md;
+
+  &.grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &.grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// Flexbox utilities
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-sm {
+  gap: vars.$spacing-sm;
+}
+
+.gap-md {
+  gap: vars.$spacing-md;
+}
+
+.gap-lg {
+  gap: vars.$spacing-lg;
+}
+
+// Section spacing
+.section {
+  padding-top: vars.$spacing-2xl;
+  padding-bottom: vars.$spacing-2xl;
+}

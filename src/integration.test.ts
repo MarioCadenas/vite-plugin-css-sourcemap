@@ -297,3 +297,128 @@ describe('vite-plugin-css-sourcemap integration', () => {
     await rimraf(customDistDir);
   });
 });
+
+describe('vite-plugin-css-sourcemap SCSS entrypoint integration', () => {
+  const scssPlaygroundDir = resolve(__dirname, '../playground-scss-entrypoint');
+  const distDir = resolve(scssPlaygroundDir, 'dist');
+  const assetsDir = resolve(distDir, 'assets');
+
+  beforeEach(async () => {
+    await rimraf(distDir);
+  });
+
+  it('should generate sourcemap for SCSS as direct rollup entrypoint', async () => {
+    await build({
+      root: scssPlaygroundDir,
+      build: {
+        outDir: distDir,
+        sourcemap: true,
+        minify: false,
+        emptyOutDir: true,
+        rollupOptions: {
+          input: {
+            main: resolve(scssPlaygroundDir, 'javascript/main.js'),
+            styles: resolve(scssPlaygroundDir, 'styles/main.scss'),
+          },
+          output: {
+            entryFileNames: 'js/[name].js',
+            chunkFileNames: 'js/[name].[hash].js',
+            assetFileNames: 'assets/[name].[ext]',
+          },
+        },
+      },
+      configFile: false,
+      plugins: [
+        (await import('./index')).default({
+          extensions: ['.css', '.scss'],
+        }),
+      ],
+    });
+
+    const files = await readdir(assetsDir);
+    const cssFiles = files.filter((file) => file.endsWith('.css'));
+    const mapFiles = files.filter((file) => file.endsWith('.css.map'));
+
+    expect(cssFiles.length).toBeGreaterThan(0);
+    expect(mapFiles.length).toBeGreaterThan(0);
+
+    for (const cssFile of cssFiles) {
+      const mapFile = `${cssFile}.map`;
+      expect(mapFiles).toContain(mapFile);
+
+      const cssContent = await readFile(resolve(assetsDir, cssFile), 'utf-8');
+      expect(cssContent).toContain(`/*# sourceMappingURL=${mapFile} */`);
+    }
+  });
+
+  it('should include all SCSS partials in sourcemap sources', async () => {
+    await build({
+      root: scssPlaygroundDir,
+      build: {
+        outDir: distDir,
+        sourcemap: true,
+        minify: false,
+        emptyOutDir: true,
+        rollupOptions: {
+          input: {
+            main: resolve(scssPlaygroundDir, 'javascript/main.js'),
+            styles: resolve(scssPlaygroundDir, 'styles/main.scss'),
+          },
+          output: {
+            entryFileNames: 'js/[name].js',
+            chunkFileNames: 'js/[name].[hash].js',
+            assetFileNames: 'assets/[name].[ext]',
+          },
+        },
+      },
+      configFile: false,
+      plugins: [
+        (await import('./index')).default({
+          extensions: ['.css', '.scss'],
+        }),
+      ],
+    });
+
+    const files = await readdir(assetsDir);
+    const mapFiles = files.filter((file) => file.endsWith('.css.map'));
+
+    expect(mapFiles.length).toBeGreaterThan(0);
+
+    const mapContent = await readFile(resolve(assetsDir, mapFiles[0]), 'utf-8');
+    const sourcemap = JSON.parse(mapContent);
+
+    expect(sourcemap.sources).toBeDefined();
+    expect(Array.isArray(sourcemap.sources)).toBe(true);
+
+    // The sourcemap should include multiple SCSS files (main + partials)
+    // not just the entrypoint
+    expect(sourcemap.sources.length).toBeGreaterThan(1);
+
+    // Check that partials are included (they should contain partial file names)
+    const sourceNames = sourcemap.sources.map((s: string) =>
+      s.split('/').pop(),
+    );
+
+    // Should include at least some of the partials
+    const expectedPartials = [
+      '_variables.scss',
+      '_reset.scss',
+      '_layout.scss',
+      '_buttons.scss',
+      '_cards.scss',
+      '_forms.scss',
+      '_utilities.scss',
+    ];
+
+    const foundPartials = expectedPartials.filter((partial) =>
+      sourceNames.some((name: string) => name === partial),
+    );
+
+    // We should find most of the partials in the sourcemap
+    expect(foundPartials.length).toBeGreaterThanOrEqual(5);
+  });
+
+  afterAll(async () => {
+    await rimraf(distDir);
+  });
+});
